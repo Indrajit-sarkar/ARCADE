@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCADE - Flappy Bird</title>
+    <link rel="stylesheet" href="flappy-style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">FLAPPY BIRD</h1>
+            <div class="score-board">
+                <div class="player-score">
+                    <span class="player-label orange" id="score-label">SCORE</span>
+                    <div class="flip-clock" id="score-clock">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span class="score-digit">0</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span class="score-digit">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="match-timer" id="match-timer">
+                    <div class="timer-label">GAME TIME</div>
+                    <div class="timer-display" id="timer-display">00:00</div>
+                </div>
+                
+                <div class="player-score">
+                    <span class="player-label blue" id="level-label">LEVEL</span>
+                    <div class="flip-clock" id="level-clock">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span class="score-digit">1</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span class="score-digit">1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-layout">
+            <div class="left-panel">
+                <div class="game-selector">
+                    <button class="game-btn" id="tictactoe-btn" onclick="window.location.href='index.html'">TIC TAC TOE</button>
+                    <button class="game-btn" id="chess-btn" onclick="window.location.href='chess.html'">CHESS</button>
+                    <button class="game-btn" id="snake-btn" onclick="window.location.href='snake.html'">SNAKE</button>
+                    <button class="game-btn active" id="flappy-btn">FLAPPY BIRD</button>
+                </div>
+                <div class="game-mode-selector">
+                    <button class="mode-btn active" id="normal-mode-btn">NORMAL</button>
+                    <button class="mode-btn" id="hard-mode-btn">HARD</button>
+                    <button class="mode-btn boss-mode" id="boss-mode-btn">BOSS MODE</button>
+                </div>
+                <div class="controls-info">
+                    <div class="controls-group">
+                        <label class="controls-label">Game Controls</label>
+                        <div class="controls-list">
+                            <div class="control-item">
+                                <span class="key">SPACE</span>
+                                <span class="action">Flap</span>
+                            </div>
+                            <div class="control-item">
+                                <span class="key">CLICK</span>
+                                <span class="action">Flap</span>
+                            </div>
+                            <div class="control-item">
+                                <span class="key">P</span>
+                                <span class="action">Pause</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center-panel">
+                <div class="game-controls">
+                    <div class="status-text" id="status-text">PRESS SPACE OR CLICK TO START</div>
+                    <button class="reset-btn" id="reset-btn">NEW GAME</button>
+                </div>
+                
+                <div class="flappy-game-board" id="flappy-game-board">
+                    <div class="bird" id="bird">
+                        <div class="bird-body"></div>
+                        <div class="bird-wing"></div>
+                        <div class="bird-eye"></div>
+                    </div>
+                    <div class="boss-container" id="boss-container">
+                        <div class="boss" id="boss">
+                            <div class="boss-body"></div>
+                            <div class="boss-eye"></div>
+                            <div class="boss-health-bar">
+                                <div class="boss-health-fill" id="boss-health-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pipes will be generated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="game-stats">
+                    <div class="stat-group">
+                        <label class="stat-label orange">HIGH SCORE</label>
+                        <div class="stat-value" id="high-score">0</div>
+                    </div>
+                    <div class="stat-group">
+                        <label class="stat-label blue">PIPES PASSED</label>
+                        <div class="stat-value" id="pipes-passed">0</div>
+                    </div>
+                    <div class="stat-group">
+                        <label class="stat-label orange">LEVEL PROGRESS</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="level-progress"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">0/10</div>
+                    </div>
+                </div>
+                
+                <div class="level-info">
+                    <div class="level-section">
+                        <div class="level-info-label">CURRENT LEVEL</div>
+                        <div class="level-details" id="level-details">
+                            <div class="level-detail-item">
+                                <span class="detail-label">Difficulty:</span>
+                                <span class="detail-value" id="difficulty-value">Normal</span>
+                            </div>
+                            <div class="level-detail-item">
+                                <span class="detail-label">Speed:</span>
+                                <span class="detail-value" id="speed-value">1x</span>
+                            </div>
+                            <div class="level-detail-item">
+                                <span class="detail-label">Gap Size:</span>
+                                <span class="detail-value" id="gap-value">Large</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="achievements">
+                    <div class="achievement-section">
+                        <div class="achievement-label">ACHIEVEMENTS</div>
+                        <div class="achievement-list" id="achievement-list">
+                            <div class="achievement-item locked" id="achievement-first-pipe">
+                                <span class="achievement-icon">🚀</span>
+                                <span class="achievement-text">First Pipe</span>
+                            </div>
+                            <div class="achievement-item locked" id="achievement-level-5">
+                                <span class="achievement-icon">⭐</span>
+                                <span class="achievement-text">Level 5</span>
+                            </div>
+                            <div class="achievement-item locked" id="achievement-score-100">
+                                <span class="achievement-icon">💯</span>
+                                <span class="achievement-text">Score 100</span>
+                            </div>
+                            <div class="achievement-item locked" id="achievement-boss-defeated">
+                                <span class="achievement-icon">👑</span>
+                                <span class="achievement-text">Boss Defeated</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="winner-overlay" id="game-over-overlay">
+            <div class="winner-content">
+                <div class="winner-text" id="game-over-text">GAME OVER!</div>
+                <div class="final-stats" id="final-stats">
+                    <div class="final-stat">
+                        <span class="final-stat-label">Final Score:</span>
+                        <span class="final-stat-value" id="final-score">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-stat-label">Level Reached:</span>
+                        <span class="final-stat-value" id="final-level">1</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-stat-label">Pipes Passed:</span>
+                        <span class="final-stat-value" id="final-pipes">0</span>
+                    </div>
+                    <div class="final-stat">
+                        <span class="final-stat-label">Time Played:</span>
+                        <span class="final-stat-value" id="final-time">00:00</span>
+                    </div>
+                </div>
+                <button class="play-again-btn" id="play-again-btn">PLAY AGAIN</button>
+            </div>
+        </div>
+        
+        <div class="level-up-overlay" id="level-up-overlay">
+            <div class="level-up-content">
+                <div class="level-up-text">LEVEL UP!</div>
+                <div class="level-up-number" id="level-up-number">2</div>
+                <div class="level-up-message" id="level-up-message">Speed Increased!</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="sounds.js"></script>
+    <script src="flappy-script.js"></script>
+</body>
+</html>
